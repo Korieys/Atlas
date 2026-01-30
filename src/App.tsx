@@ -10,6 +10,8 @@ import { MaintenanceView } from './components/views/MaintenanceView';
 import { SupplyView } from './components/views/SupplyView';
 import { ProductionView } from './components/views/ProductionView';
 import { ScheduleView } from './components/views/ScheduleView';
+import { CheckpointView } from './components/views/CheckpointView';
+import { ReworkView } from './components/views/ReworkView';
 
 function App() {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -91,13 +93,15 @@ function App() {
             <div>
               <h2 className="text-3xl font-bold text-white mb-2 tracking-tight">
                 {activeTab === 'dashboard' && 'BMW Atlas Overview'}
+                {activeTab === 'checkpoints' && 'F1/F2 Checkpoints'}
                 {activeTab === 'maintenance' && 'Predictive Maintenance'}
                 {activeTab === 'supply' && 'Supply Chain Intelligence'}
-                {activeTab === 'production' && 'Production Resilience'}
+                {activeTab === 'production' && 'Montage Flow Intelligence'}
+                {activeTab === 'rework' && 'Rework Station Intelligence'}
                 {activeTab === 'schedule' && 'Inspection Scheduler'}
               </h2>
               <p className="text-slate-400">
-                Unified Agentic Control Layer • {new Date().toLocaleDateString()}
+                Unified Agentic Control Layer • Leipzig • {new Date().toLocaleDateString()}
               </p>
             </div>
             {activeTab === 'maintenance' && (
@@ -116,6 +120,7 @@ function App() {
 
           <div className="mt-6">
             {activeTab === 'dashboard' && <DashboardView chartData={chartData} agentLogs={agentLogs} />}
+            {activeTab === 'checkpoints' && <CheckpointView />}
             {activeTab === 'maintenance' && (
               <MaintenanceView
                 robots={robots}
@@ -127,6 +132,7 @@ function App() {
             )}
             {activeTab === 'supply' && <SupplyView />}
             {activeTab === 'production' && <ProductionView isSimulating={isSimulating} />}
+            {activeTab === 'rework' && <ReworkView />}
             {activeTab === 'schedule' && <ScheduleView />}
           </div>
         </main>

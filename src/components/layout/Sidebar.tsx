@@ -4,7 +4,9 @@ import {
     RefreshCw,
     Truck,
     Factory,
-    Calendar
+    Calendar,
+    CheckCircle2,
+    Wrench
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -15,9 +17,11 @@ interface SidebarProps {
 export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
     const menuItems = [
         { id: 'dashboard', icon: LayoutDashboard, label: 'Overview' },
+        { id: 'checkpoints', icon: CheckCircle2, label: 'F1/F2 Checkpoints' },
         { id: 'maintenance', icon: RefreshCw, label: 'Predictive Maint.' },
         { id: 'supply', icon: Truck, label: 'Supply Chain' },
-        { id: 'production', icon: Factory, label: 'Production Flow' },
+        { id: 'production', icon: Factory, label: 'Montage Flow' },
+        { id: 'rework', icon: Wrench, label: 'Rework Station' },
         { id: 'schedule', icon: Calendar, label: 'Inspection Sched.' },
     ];
 

@@ -5,7 +5,7 @@ export const Header: React.FC = () => {
     return (
         <header className="h-16 border-b border-slate-800 flex items-center justify-between px-8 bg-slate-950/80 backdrop-blur-md sticky top-0 z-40 shadow-sm">
             <div className="flex items-center gap-4 text-slate-400 text-sm">
-                <span>Plant: <span className="text-white font-medium">Spartanburg</span></span>
+                <span>Plant: <span className="text-white font-medium">Leipzig</span></span>
                 <span className="text-slate-700">|</span>
                 <span>Shift: <span className="text-white font-medium">B (14:00 - 22:00)</span></span>
             </div>
