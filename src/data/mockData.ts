@@ -42,13 +42,22 @@ export const PRODUCTION_VOLUME = {
     endTime: '14:00',
 };
 
-export const DEGRADATION_DATA_TEMPLATE = [
-    { time: '00:00', throughput: 85, syncLevel: 98, oee: 92 },
-    { time: '04:00', throughput: 88, syncLevel: 97, oee: 91 },
-    { time: '08:00', throughput: 92, syncLevel: 99, oee: 94 },
-    { time: '12:00', throughput: 90, syncLevel: 98, oee: 93 },
-    { time: '16:00', throughput: 85, syncLevel: 95, oee: 89 },
-    { time: '20:00', throughput: 82, syncLevel: 92, oee: 88 },
+export interface ProductionData {
+    time: string;
+    throughput: number;
+    syncLevel: number;
+    oee: number;
+    vibration: number;
+    temp: number;
+}
+
+export const DEGRADATION_DATA_TEMPLATE: ProductionData[] = [
+    { time: '00:00', throughput: 85, syncLevel: 98, oee: 92, vibration: 12, temp: 45 },
+    { time: '04:00', throughput: 88, syncLevel: 97, oee: 91, vibration: 14, temp: 46 },
+    { time: '08:00', throughput: 92, syncLevel: 99, oee: 94, vibration: 13, temp: 48 },
+    { time: '12:00', throughput: 90, syncLevel: 98, oee: 93, vibration: 15, temp: 47 },
+    { time: '16:00', throughput: 85, syncLevel: 95, oee: 89, vibration: 18, temp: 50 },
+    { time: '20:00', throughput: 82, syncLevel: 92, oee: 88, vibration: 16, temp: 49 },
 ];
 
 export const PRODUCTION_STAGES = [

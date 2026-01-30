@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import {
   INITIAL_ROBOTS,
-  DEGRADATION_DATA_TEMPLATE
+  DEGRADATION_DATA_TEMPLATE,
 } from './data/mockData';
+import type { ProductionData } from './data/mockData';
 import { Sidebar } from './components/layout/Sidebar';
 import { Header } from './components/layout/Header';
 import { DashboardView } from './components/views/DashboardView';
@@ -22,7 +23,7 @@ function App() {
     { id: 3, time: '08:12:45', type: 'action', msg: 'RFID Verification: All components for Shift B verified in Buffer A.' },
   ]);
   const [isSimulating, setIsSimulating] = useState(false);
-  const [chartData, setChartData] = useState(DEGRADATION_DATA_TEMPLATE);
+  const [chartData, setChartData] = useState<ProductionData[]>(DEGRADATION_DATA_TEMPLATE);
 
   // Helper to add logs
   const addLog = (msg: string, type: 'info' | 'success' | 'warning' | 'error' | 'action' = 'info') => {
@@ -40,8 +41,8 @@ function App() {
 
     // Update chart to show spike
     const spikedData = [...DEGRADATION_DATA_TEMPLATE,
-    { time: '21:00', throughput: 75, syncLevel: 80 },
-    { time: '22:00', throughput: 62, syncLevel: 45 }
+    { time: '21:00', throughput: 75, syncLevel: 80, oee: 70, vibration: 45, temp: 72 },
+    { time: '22:00', throughput: 62, syncLevel: 45, oee: 55, vibration: 68, temp: 85 }
     ];
     setChartData(spikedData);
 
