@@ -17,8 +17,9 @@ function App() {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [robots, setRobots] = useState(INITIAL_ROBOTS);
   const [agentLogs, setAgentLogs] = useState([
-    { id: 1, time: '08:00:01', type: 'info', msg: 'System initialized. Monitoring 4,203 nodes.' },
-    { id: 2, time: '08:05:22', type: 'success', msg: 'Inventory optimization complete. Reduced buffer stock by 4%.' },
+    { id: 1, time: '08:00:01', type: 'info', msg: 'Leipzig Node Connectivity: 100% stable. Buffer states aligned.' },
+    { id: 2, time: '08:05:22', type: 'success', msg: 'Energy Peak Shaving: Shifted HVAC load in Finger 3 to off-peak window.' },
+    { id: 3, time: '08:12:45', type: 'action', msg: 'RFID Verification: All components for Shift B verified in Buffer A.' },
   ]);
   const [isSimulating, setIsSimulating] = useState(false);
   const [chartData, setChartData] = useState(DEGRADATION_DATA_TEMPLATE);
@@ -35,39 +36,37 @@ function App() {
     setIsSimulating(true);
 
     // Step 1: Anomaly Detection
-    addLog('SENSOR ALERT: High frequency vibration detected on R-101 (Welding Arm A).', 'warning');
+    addLog('LOGISTICS ALERT: Tier 2 delay detected on Wiring Looms (A-2).', 'warning');
 
     // Update chart to show spike
     const spikedData = [...DEGRADATION_DATA_TEMPLATE,
-    { time: '21:00', vibration: 45, temp: 72 },
-    { time: '22:00', vibration: 68, temp: 85 }
+    { time: '21:00', throughput: 75, syncLevel: 80 },
+    { time: '22:00', throughput: 62, syncLevel: 45 }
     ];
     setChartData(spikedData);
 
     // Update robot health
     setTimeout(() => {
-      setRobots(prev => prev.map(r => r.id === 'R-101' ? { ...r, status: 'Critical', health: 32 } : r));
-      addLog('ANALYSIS: Gearbox #GB-404 wear acceleration. Failure probability 99% within 48h.', 'error');
+      setRobots(prev => prev.map(r => r.id === 'R-309' ? { ...r, status: 'Warning', load: 95 } : r));
+      addLog('ANALYSIS: ASI (Synchronization Index) dropping below 60%. Finger 4 starvation risk.', 'error');
     }, 1500);
 
     // Step 2: Inventory & Supply Check
     setTimeout(() => {
-      addLog('AGENT: Querying Global Inventory...', 'info');
-      addLog('INVENTORY: Gearbox #GB-404 available in Warehouse B (Slot A-12).', 'success');
+      addLog('AGENT INTELLIGENCE: Scanning alternative inbound ports...', 'info');
+      addLog('PORT C: Standby capacity active. Redirecting RFID batch #XB-202.', 'success');
     }, 3000);
 
     // Step 3: Production Re-planning
     setTimeout(() => {
-      addLog('RESILIENCE ENGINE: Calculating impact of immediate downtime...', 'info');
-      addLog('DECISION: Re-routing Line 4 tasks to Robot R-102. Takt time adjusted +1.2s.', 'action');
-      setRobots(prev => prev.map(r => r.id === 'R-102' ? { ...r, load: 98, status: 'Warning' } : r));
+      addLog('RESILIENCE ENGINE: Micro-calibrating Montage speed in Finger 2.', 'info');
+      addLog('DECISION: Buffering 14.5% extra safety stock for Montage Finger 3.', 'action');
     }, 5000);
 
     // Step 4: Execution
     setTimeout(() => {
-      addLog('EXECUTION: Maintenance Work Order #WO-9928 created automatically.', 'success');
-      addLog('EXECUTION: AGV dispatched to Warehouse B for part pickup.', 'success');
-      setRobots(prev => prev.map(r => r.id === 'R-101' ? { ...r, status: 'Action', nextService: 'Now' } : r));
+      addLog('OPTIMIZATION: Spot Buying initiated for safety stock buffer.', 'success');
+      addLog('EXECUTION: Autonomous Tug (AGV-12) dispatched for emergency replenishment.', 'success');
       setIsSimulating(false);
     }, 7000);
   };
@@ -75,7 +74,7 @@ function App() {
   const resetSimulation = () => {
     setRobots(INITIAL_ROBOTS);
     setChartData(DEGRADATION_DATA_TEMPLATE);
-    addLog('System reset. Normal monitoring resumed.', 'info');
+    addLog('Manual override: Synchronization Index reset. Normal operations resumed.', 'info');
     setIsSimulating(false);
   };
 

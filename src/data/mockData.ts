@@ -22,13 +22,33 @@ export const PART_LOCATIONS = [
     { id: 'CS-4', part: 'Chips S-04', currentPort: 'P-A', arrivalTime: '14:30', status: 'Processing' },
 ];
 
+export const FINGER_STATUS = [
+    { id: 'F-1', name: 'Finger 1 (Front)', health: 98, load: 85, bottleneck: false, status: 'Optimal' },
+    { id: 'F-2', name: 'Finger 2 (Cabin)', health: 94, load: 88, bottleneck: false, status: 'Optimal' },
+    { id: 'F-3', name: 'Finger 3 (Drive)', health: 76, load: 92, bottleneck: true, status: 'Warning' },
+    { id: 'F-4', name: 'Finger 4 (Trim)', health: 92, load: 45, bottleneck: false, status: 'Underutilized' },
+];
+
+export const OEE_DATA = [
+    { name: 'Availability', value: 94.2, target: 95 },
+    { name: 'Performance', value: 91.5, target: 92 },
+    { name: 'Quality', value: 98.8, target: 99 },
+];
+
+export const PRODUCTION_VOLUME = {
+    actual: 1240,
+    goal: 1400,
+    startTime: '06:00',
+    endTime: '14:00',
+};
+
 export const DEGRADATION_DATA_TEMPLATE = [
-    { time: '00:00', vibration: 12, temp: 45 },
-    { time: '04:00', vibration: 14, temp: 46 },
-    { time: '08:00', vibration: 13, temp: 48 },
-    { time: '12:00', vibration: 15, temp: 47 },
-    { time: '16:00', vibration: 18, temp: 50 },
-    { time: '20:00', vibration: 16, temp: 49 },
+    { time: '00:00', throughput: 85, syncLevel: 98, oee: 92 },
+    { time: '04:00', throughput: 88, syncLevel: 97, oee: 91 },
+    { time: '08:00', throughput: 92, syncLevel: 99, oee: 94 },
+    { time: '12:00', throughput: 90, syncLevel: 98, oee: 93 },
+    { time: '16:00', throughput: 85, syncLevel: 95, oee: 89 },
+    { time: '20:00', throughput: 82, syncLevel: 92, oee: 88 },
 ];
 
 export const PRODUCTION_STAGES = [
