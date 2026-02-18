@@ -36,7 +36,10 @@ export const ScheduleView: React.FC = () => {
                 <div className="flex justify-between items-center mb-6">
                     <h3 className="text-lg font-bold text-white">Dynamic Inspection Queue</h3>
                     <div className="flex gap-2">
-                        <button className="px-3 py-1.5 rounded bg-blue-600 text-white text-xs font-medium hover:bg-blue-500 transition-colors shadow-lg shadow-blue-600/20">
+                        <button
+                            onClick={() => alert('All recommendations approved. Schedule updated.')}
+                            className="px-3 py-1.5 rounded bg-blue-600 text-white text-xs font-medium hover:bg-blue-500 transition-colors shadow-lg shadow-blue-600/20"
+                        >
                             Approve All Recommendations
                         </button>
                     </div>
@@ -69,16 +72,24 @@ export const ScheduleView: React.FC = () => {
                                         {task.reason}
                                     </td>
                                     <td className={`px-4 py-4 font-mono font-bold ${task.impact.includes('+') ? 'text-emerald-400' :
-                                            task.impact.includes('-') ? 'text-rose-400' : 'text-slate-400'
+                                        task.impact.includes('-') ? 'text-rose-400' : 'text-slate-400'
                                         }`}>
                                         {task.impact}
                                     </td>
                                     <td className="px-4 py-4">
                                         <div className="flex gap-2 opacity-60 group-hover:opacity-100 transition-opacity">
-                                            <button className="p-1.5 rounded hover:bg-emerald-500/20 text-emerald-400 transition-colors" title="Approve">
+                                            <button
+                                                onClick={() => alert(`Approved inspection for ${task.asset}`)}
+                                                className="p-1.5 rounded hover:bg-emerald-500/20 text-emerald-400 transition-colors"
+                                                title="Approve"
+                                            >
                                                 <CheckCircle size={16} />
                                             </button>
-                                            <button className="p-1.5 rounded hover:bg-slate-700 text-slate-400 transition-colors" title="Edit">
+                                            <button
+                                                onClick={() => alert(`Edit schedule for ${task.asset}`)}
+                                                className="p-1.5 rounded hover:bg-slate-700 text-slate-400 transition-colors"
+                                                title="Edit"
+                                            >
                                                 <Settings size={16} />
                                             </button>
                                         </div>

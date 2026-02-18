@@ -47,13 +47,27 @@ export const ProductionView: React.FC<ProductionViewProps> = ({ isSimulating }) 
                         <h3 className="text-2xl font-bold text-white">1 <span className="text-sm font-normal text-slate-500">active</span></h3>
                     </div>
                 </Card>
-                <Card className="flex items-center gap-4 hover:bg-slate-800/80 transition-colors">
+                <Card className="flex items-center gap-4 hover:bg-slate-800/80 transition-colors group relative overflow-hidden">
                     <div className="p-3 rounded-full bg-amber-500/10 text-amber-400">
                         <Activity size={24} />
                     </div>
                     <div>
                         <p className="text-sm text-slate-400">Bottleneck Risk</p>
-                        <h3 className="text-2xl font-bold text-white">Body Shop</h3>
+                        {(() => {
+                            const bottleneck = PRODUCTION_STAGES.find(s => s.status === 'Warning') || PRODUCTION_STAGES.find(s => s.name === 'Body Shop') || PRODUCTION_STAGES[0];
+                            return (
+                                <>
+                                    <h3 className="text-2xl font-bold text-white">{bottleneck.name}</h3>
+                                    {bottleneck.issue && (
+                                        <div className="absolute inset-x-0 bottom-0 bg-slate-900/95 p-2 border-t border-slate-700/50 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out z-10">
+                                            <p className="text-[10px] text-slate-300 leading-tight">
+                                                <span className="font-bold text-slate-500">Reason:</span> {bottleneck.issue}
+                                            </p>
+                                        </div>
+                                    )}
+                                </>
+                            );
+                        })()}
                     </div>
                 </Card>
             </div>
@@ -91,8 +105,8 @@ export const ProductionView: React.FC<ProductionViewProps> = ({ isSimulating }) 
                         <div key={stage.id} className="relative group">
                             {/* Node Circle */}
                             <div className={`w-16 h-16 rounded-full border-4 flex items-center justify-center bg-slate-900 z-20 transition-all duration-500 ${stage.status === 'Warning' ? 'border-amber-500 shadow-[0_0_20px_rgba(245,158,11,0.3)]' :
-                                    isSimulating && stage.id === 'ST-2' ? 'border-blue-500 shadow-[0_0_20px_rgba(59,130,246,0.5)]' :
-                                        'border-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.2)]'
+                                isSimulating && stage.id === 'ST-2' ? 'border-blue-500 shadow-[0_0_20px_rgba(59,130,246,0.5)]' :
+                                    'border-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.2)]'
                                 }`}>
                                 <Factory size={24} className={stage.status === 'Warning' ? 'text-amber-500' : 'text-slate-300'} />
                             </div>

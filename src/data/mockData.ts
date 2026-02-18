@@ -23,10 +23,10 @@ export const PART_LOCATIONS = [
 ];
 
 export const FINGER_STATUS = [
-    { id: 'F-1', name: 'Finger 1 (Front)', health: 98, load: 85, bottleneck: false, status: 'Optimal' },
-    { id: 'F-2', name: 'Finger 2 (Cabin)', health: 94, load: 88, bottleneck: false, status: 'Optimal' },
-    { id: 'F-3', name: 'Finger 3 (Drive)', health: 76, load: 92, bottleneck: true, status: 'Warning' },
-    { id: 'F-4', name: 'Finger 4 (Trim)', health: 92, load: 45, bottleneck: false, status: 'Underutilized' },
+    { id: 'F-1', name: 'Finger 1 (Front)', health: 98, load: 85, bottleneck: false, status: 'Optimal', reason: 'Normal operation' },
+    { id: 'F-2', name: 'Finger 2 (Cabin)', health: 94, load: 88, bottleneck: false, status: 'Optimal', reason: 'Normal operation' },
+    { id: 'F-3', name: 'Finger 3 (Drive)', health: 76, load: 92, bottleneck: true, status: 'Warning', reason: 'Drive Sync Fail: Conveyor motor timing mismatch detected.' },
+    { id: 'F-4', name: 'Finger 4 (Trim)', health: 92, load: 45, bottleneck: false, status: 'Underutilized', reason: 'Waiting for upstream batch' },
 ];
 
 export const OEE_DATA = [

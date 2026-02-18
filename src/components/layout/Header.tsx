@@ -18,7 +18,10 @@ export const Header: React.FC = () => {
                         className="bg-slate-900 border border-slate-700 rounded-full pl-10 pr-4 py-1.5 text-sm focus:outline-none focus:border-blue-500 w-64 transition-all focus:w-80 focus:shadow-[0_0_15px_rgba(59,130,246,0.2)] text-slate-200 placeholder-slate-600"
                     />
                 </div>
-                <button className="p-2 text-slate-400 hover:text-white relative hover:bg-slate-800 rounded-full transition-colors">
+                <button
+                    onClick={() => alert('Notifications: No new critical alerts. System operating within normal parameters.')}
+                    className="p-2 text-slate-400 hover:text-white relative hover:bg-slate-800 rounded-full transition-colors"
+                >
                     <AlertTriangle size={20} />
                     <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-amber-500 rounded-full animate-ping"></span>
                     <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-amber-500 rounded-full"></span>

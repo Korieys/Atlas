@@ -14,6 +14,17 @@ import { ScheduleView } from './components/views/ScheduleView';
 import { CheckpointView } from './components/views/CheckpointView';
 import { ReworkView } from './components/views/ReworkView';
 
+// Page Descriptions
+const PAGE_DESCRIPTIONS = {
+  dashboard: "Real-time system overview monitoring active agents, plant efficiency, and global health metrics.",
+  checkpoints: "Final quality validation checkpoint monitoring for VIN-specific F1/F2 status.",
+  maintenance: "Predictive maintenance algorithms analyzing robot telemetry to prevent hardware failures.",
+  supply: "Real-time supply chain tracking for inbound components and port capacity management.",
+  production: "Live visualization of production line topology, throughput, and bottleneck identification.",
+  rework: "Management interface for inline and offline vehicle rectification and defect resolution.",
+  schedule: "AI-optimized inspection scheduling based on predictive wear analysis and risk factors."
+};
+
 function App() {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [robots, setRobots] = useState(INITIAL_ROBOTS);
@@ -100,7 +111,11 @@ function App() {
                 {activeTab === 'rework' && 'Rework Station Intelligence'}
                 {activeTab === 'schedule' && 'Inspection Scheduler'}
               </h2>
-              <p className="text-slate-400">
+              <p className="text-slate-400 max-w-2xl bg-slate-900/50 p-2 rounded border border-slate-800/50 text-sm">
+                <span className="text-blue-400 font-bold mr-2">CONTEXT:</span>
+                {PAGE_DESCRIPTIONS[activeTab as keyof typeof PAGE_DESCRIPTIONS]}
+              </p>
+              <p className="text-slate-500 text-xs mt-2 uppercase tracking-widest opacity-60">
                 Unified Agentic Control Layer • Leipzig • {new Date().toLocaleDateString()}
               </p>
             </div>

@@ -146,7 +146,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ chartData, agentLo
                             <h4 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4 border-l-2 border-blue-500 pl-2">Finger Health Matrix</h4>
                             <div className="grid grid-cols-2 gap-3">
                                 {FINGER_STATUS.map(finger => (
-                                    <div key={finger.id} className={`p-3 rounded-lg border flex flex-col justify-between h-20 transition-colors ${finger.status === 'Warning' ? 'bg-amber-500/10 border-amber-500/20' :
+                                    <div key={finger.id} className={`p-3 rounded-lg border flex flex-col justify-between h-auto min-h-20 transition-colors group relative overflow-hidden ${finger.status === 'Warning' ? 'bg-amber-500/10 border-amber-500/20' :
                                         finger.status === 'Underutilized' ? 'bg-blue-500/10 border-blue-500/20' :
                                             'bg-slate-800/50 border-slate-700/50'
                                         }`}>
@@ -158,12 +158,20 @@ export const DashboardView: React.FC<DashboardViewProps> = ({ chartData, agentLo
                                         </div>
                                         <div>
                                             <p className="text-[10px] text-white font-bold truncate">{finger.name}</p>
-                                            <div className="flex justify-between items-center mt-1">
+                                            <div className="flex justify-between items-center mt-1 group-hover:opacity-20 transition-opacity delay-75">
                                                 <span className="text-[9px] text-slate-500 uppercase">Load: {finger.load}%</span>
                                                 <span className={`text-[9px] font-bold ${finger.health > 90 ? 'text-emerald-400' :
                                                     finger.health > 80 ? 'text-slate-400' : 'text-amber-400'
                                                     }`}>{finger.health}% Health</span>
                                             </div>
+                                            {/* Reason Display - Slide Up Hover Effect */}
+                                            {(finger.status === 'Warning' || finger.status === 'Underutilized') && finger.reason && (
+                                                <div className="absolute inset-x-0 bottom-0 bg-slate-900/95 p-2 border-t border-slate-700/50 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out z-10">
+                                                    <p className="text-[9px] text-slate-300 leading-tight">
+                                                        <span className="font-bold text-slate-500">Reason:</span> {finger.reason}
+                                                    </p>
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
                                 ))}
