@@ -72,7 +72,7 @@ export const CHECKPOINT_CARS = [
     { id: 'VIN-7721', model: 'BMW i4', status: 'F1', health: 'Healthy', timestamp: '2026-01-30 08:45', issues: 'None', powerOn: true },
     { id: 'VIN-8842', model: 'BMW 2-Series', status: 'F1', health: 'Minor Warning', timestamp: '2026-01-30 09:12', issues: 'Software Update Pending', powerOn: true },
     { id: 'VIN-9901', model: 'BMW iX', status: 'F2', health: 'Healthy', timestamp: '2026-01-30 07:30', issues: 'None', deliveryReady: true },
-    { id: 'VIN-1245', model: 'BMW 1-Series', status: 'F2', health: 'Perfect', timestamp: '2026-01-30 09:30', issues: 'None', deliveryReady: true },
+    { id: 'VIN-1245', model: 'BMW 1-Series', status: 'F2', health: 'Healthy', timestamp: '2026-01-30 09:30', issues: 'None', deliveryReady: true },
 ];
 
 export const REWORK_CARS = {
