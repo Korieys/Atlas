@@ -1,23 +1,290 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
+/* ─── Atlas Design Tokens ───────────────────────────────────────────────── */
 @theme {
   --animate-spin-slow: spin 3s linear infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-shimmer: shimmer 2s linear infinite;
+  --animate-glow-pulse: glow-pulse 2s ease-in-out infinite;
+  --animate-slide-up: slide-up 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-fade-in: fade-in 0.5s ease-out;
+  --animate-count-up: count-up 1s ease-out;
 }
 
-/* Custom Scrollbar */
+/* ─── Base Styles ───────────────────────────────────────────────────────── */
+* {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--atlas-background, #020617);
+  color: var(--atlas-text-primary, #f1f5f9);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: hsl(var(--atlas-primary, 220 70% 55%) / 0.3);
+}
+
+/* ─── Scrollbar ─────────────────────────────────────────────────────────── */
 .custom-scrollbar::-webkit-scrollbar {
-  width: 6px;
+  width: 5px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: #0f172a;
+  background: transparent;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #334155;
+  background: hsl(var(--atlas-primary, 220 70% 55%) / 0.2);
   border-radius: 10px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #475569;
+  background: hsl(var(--atlas-primary, 220 70% 55%) / 0.4);
+}
+
+/* ─── Glassmorphism Surfaces ────────────────────────────────────────────── */
+.glass-surface {
+  background: var(--atlas-surface, rgba(15, 23, 42, 0.8));
+  border: 1px solid var(--atlas-surface-border, rgba(51, 65, 85, 0.5));
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+}
+
+.glass-surface-elevated {
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(71, 85, 105, 0.3);
+  backdrop-filter: blur(24px) saturate(200%);
+  -webkit-backdrop-filter: blur(24px) saturate(200%);
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.3),
+    0 2px 4px -2px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.03);
+}
+
+/* ─── Glow Effects ──────────────────────────────────────────────────────── */
+.glow-primary {
+  box-shadow: 0 0 20px hsl(var(--atlas-primary, 220 70% 55%) / 0.25);
+}
+
+.glow-success {
+  box-shadow: 0 0 12px hsl(var(--atlas-success, 160 84% 39%) / 0.4);
+}
+
+.glow-warning {
+  box-shadow: 0 0 12px hsl(var(--atlas-warning, 38 92% 50%) / 0.4);
+}
+
+.glow-danger {
+  box-shadow: 0 0 12px hsl(var(--atlas-danger, 0 84% 60%) / 0.4);
+}
+
+/* ─── Status Indicators ─────────────────────────────────────────────────── */
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  position: relative;
+}
+
+.status-dot::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  opacity: 0;
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+.status-dot-active {
+  background: hsl(var(--atlas-success, 160 84% 39%));
+}
+
+.status-dot-active::after {
+  background: hsl(var(--atlas-success, 160 84% 39%) / 0.3);
+  opacity: 1;
+}
+
+/* ─── Interactive Cards ─────────────────────────────────────────────────── */
+.atlas-card {
+  background: var(--atlas-surface, rgba(15, 23, 42, 0.8));
+  border: 1px solid var(--atlas-surface-border, rgba(51, 65, 85, 0.5));
+  border-radius: 12px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.atlas-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    hsl(var(--atlas-primary, 220 70% 55%) / 0),
+    hsl(var(--atlas-primary, 220 70% 55%) / 0)
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  transition: background 0.3s ease;
+}
+
+.atlas-card:hover::before {
+  background: linear-gradient(
+    135deg,
+    hsl(var(--atlas-primary, 220 70% 55%) / 0.3),
+    hsl(var(--atlas-accent, 262 60% 55%) / 0.15)
+  );
+}
+
+.atlas-card:hover {
+  border-color: hsl(var(--atlas-primary, 220 70% 55%) / 0.3);
+  box-shadow:
+    0 8px 32px -8px hsl(var(--atlas-primary, 220 70% 55%) / 0.15),
+    0 4px 16px -4px rgba(0, 0, 0, 0.3);
+  transform: translateY(-1px);
+}
+
+/* ─── Sidebar ───────────────────────────────────────────────────────────── */
+.sidebar-item {
+  position: relative;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar-item-active {
+  background: hsl(var(--atlas-primary, 220 70% 55%) / 0.15);
+}
+
+.sidebar-item-active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 60%;
+  background: hsl(var(--atlas-primary, 220 70% 55%));
+  border-radius: 0 4px 4px 0;
+  box-shadow: 0 0 12px hsl(var(--atlas-primary, 220 70% 55%) / 0.5);
+}
+
+/* ─── Animations ────────────────────────────────────────────────────────── */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes count-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* ─── Utility Helpers ───────────────────────────────────────────────────── */
+.text-gradient-primary {
+  background: linear-gradient(
+    135deg,
+    hsl(var(--atlas-primary, 220 70% 55%)),
+    hsl(var(--atlas-accent, 262 60% 55%))
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.border-gradient-primary {
+  border-image: linear-gradient(
+    135deg,
+    hsl(var(--atlas-primary, 220 70% 55%) / 0.5),
+    hsl(var(--atlas-accent, 262 60% 55%) / 0.2)
+  ) 1;
+}
+
+.bg-noise {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+}
+
+/* ─── Toast Animations ──────────────────────────────────────────────────── */
+.toast-enter {
+  animation: toast-slide-in 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.toast-exit {
+  animation: toast-slide-out 0.3s cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+@keyframes toast-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(100%) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes toast-slide-out {
+  from {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%) scale(0.95);
+  }
+}
+
+/* ─── Preset Switcher ───────────────────────────────────────────────────── */
+.preset-chip {
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.preset-chip:hover {
+  background: hsl(var(--atlas-primary, 220 70% 55%) / 0.1);
+  border-color: hsl(var(--atlas-primary, 220 70% 55%) / 0.3);
+}
+
+.preset-chip-active {
+  background: hsl(var(--atlas-primary, 220 70% 55%) / 0.15);
+  border-color: hsl(var(--atlas-primary, 220 70% 55%) / 0.5);
+  box-shadow: 0 0 12px hsl(var(--atlas-primary, 220 70% 55%) / 0.15);
 }

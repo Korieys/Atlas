@@ -3,10 +3,15 @@ import React from 'react';
 interface CardProps {
     children: React.ReactNode;
     className?: string;
+    glow?: boolean;
+    onClick?: () => void;
 }
 
-export const Card: React.FC<CardProps> = ({ children, className = "" }) => (
-    <div className={`bg-slate-900/80 border border-slate-700/50 rounded-lg p-5 shadow-lg backdrop-blur-md transition-all duration-300 hover:shadow-blue-900/20 hover:border-slate-600 ${className}`}>
+export const Card: React.FC<CardProps> = ({ children, className = '', glow = false, onClick }) => (
+    <div
+        onClick={onClick}
+        className={`atlas-card p-5 ${glow ? 'glow-primary' : ''} ${onClick ? 'cursor-pointer' : ''} ${className}`}
+    >
         {children}
     </div>
 );

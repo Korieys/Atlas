@@ -1,32 +1,75 @@
-import React from 'react';
-import { Search, AlertTriangle } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Search, Bell } from 'lucide-react';
+import { useAtlas } from '../../config/ConfigContext';
 
-export const Header: React.FC = () => {
+interface HeaderProps {
+    onNotification?: (msg: string) => void;
+}
+
+export const Header: React.FC<HeaderProps> = ({ onNotification }) => {
+    const { config } = useAtlas();
+    const [time, setTime] = useState(new Date());
+    const [searchFocused, setSearchFocused] = useState(false);
+
+    useEffect(() => {
+        const timer = setInterval(() => setTime(new Date()), 1000);
+        return () => clearInterval(timer);
+    }, []);
+
     return (
-        <header className="h-16 border-b border-slate-800 flex items-center justify-between px-8 bg-slate-950/80 backdrop-blur-md sticky top-0 z-40 shadow-sm">
-            <div className="flex items-center gap-4 text-slate-400 text-sm">
-                <span>Plant: <span className="text-white font-medium">Leipzig</span></span>
+        <header className="h-14 border-b border-slate-800/50 flex items-center justify-between px-6 glass-surface-elevated sticky top-0 z-40">
+            {/* Left: Plant & Shift Info */}
+            <div className="flex items-center gap-4 text-slate-400 text-xs">
+                <div className="flex items-center gap-2">
+                    <div className="status-dot status-dot-active" />
+                    <span>
+                        {config.terminology.plant}: <span className="text-white font-semibold">{config.terminology.plantName}</span>
+                    </span>
+                </div>
                 <span className="text-slate-700">|</span>
-                <span>Shift: <span className="text-white font-medium">B (14:00 - 22:00)</span></span>
+                <span>
+                    Shift: <span className="text-white font-semibold">{config.terminology.shift}</span>
+                </span>
+                <span className="text-slate-700">|</span>
+                <span className="font-mono text-slate-500">
+                    {time.toLocaleTimeString('en-US', { hour12: false })}
+                </span>
             </div>
-            <div className="flex items-center gap-4">
+
+            {/* Right: Search, Notifications, Avatar */}
+            <div className="flex items-center gap-3">
                 <div className="relative group">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-blue-400 transition-colors" size={16} />
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-slate-300 transition-colors" size={14} />
                     <input
                         type="text"
                         placeholder="Search assets, parts, or alerts..."
-                        className="bg-slate-900 border border-slate-700 rounded-full pl-10 pr-4 py-1.5 text-sm focus:outline-none focus:border-blue-500 w-64 transition-all focus:w-80 focus:shadow-[0_0_15px_rgba(59,130,246,0.2)] text-slate-200 placeholder-slate-600"
+                        onFocus={() => setSearchFocused(true)}
+                        onBlur={() => setSearchFocused(false)}
+                        className={`w-72 bg-slate-900/50 border rounded-lg pl-9 pr-10 py-1.5 text-xs focus:outline-none transition-all text-slate-200 placeholder-slate-600 ${
+                            searchFocused
+                                ? 'border-slate-600 shadow-lg shadow-black/20'
+                                : 'border-slate-800'
+                        }`}
                     />
+                    <kbd className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[9px] text-slate-600 bg-slate-800 px-1.5 py-0.5 rounded border border-slate-700 font-mono hidden group-focus-within:hidden sm:inline-block">
+                        ⌘K
+                    </kbd>
                 </div>
+
                 <button
-                    onClick={() => alert('Notifications: No new critical alerts. System operating within normal parameters.')}
-                    className="p-2 text-slate-400 hover:text-white relative hover:bg-slate-800 rounded-full transition-colors"
+                    onClick={() => onNotification?.('No new critical alerts. System operating within normal parameters.')}
+                    className="p-2 text-slate-400 hover:text-white relative hover:bg-slate-800/50 rounded-lg transition-all"
                 >
-                    <AlertTriangle size={20} />
-                    <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-amber-500 rounded-full animate-ping"></span>
-                    <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-amber-500 rounded-full"></span>
+                    <Bell size={16} />
+                    <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: `hsl(var(--atlas-warning))` }} />
                 </button>
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-xs font-bold text-white shadow-lg cursor-pointer hover:ring-2 ring-blue-500 ring-offset-2 ring-offset-slate-900 transition-all">
+
+                <div
+                    className="w-8 h-8 rounded-lg flex items-center justify-center text-[10px] font-bold text-white cursor-pointer hover:ring-2 ring-offset-2 ring-offset-slate-900 transition-all"
+                    style={{
+                        background: `linear-gradient(135deg, hsl(var(--atlas-primary)), hsl(var(--atlas-accent)))`,
+                    }}
+                >
                     AD
                 </div>
             </div>
